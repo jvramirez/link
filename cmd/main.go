@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jvramirez/link"
 )
@@ -19,7 +20,13 @@ func main() {
 
 func displayLinks(fileName string) {
 
-	links, err := link.LinksFromFile(fileName)
+	file, err := os.Open(fileName)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	links, err := link.Parse(file)
 	if err != nil {
 		panic(err)
 	}

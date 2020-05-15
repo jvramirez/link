@@ -1,7 +1,7 @@
 package link
 
 import (
-	"os"
+	"io"
 	"strings"
 
 	"golang.org/x/net/html"
@@ -17,17 +17,11 @@ type Link struct {
 // Links is a collection of Link structs
 type Links []Link
 
-// LinksFromFile creates a collection of "Link" (type "Links")
+// Parse creates a collection of "Link" (type "Links")
 // base on the contents of HTML file
-func LinksFromFile(fileName string) (Links, error) {
+func Parse(r io.Reader) (Links, error) {
 
-	file, err := os.Open(fileName)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	root, err := html.Parse(file)
+	root, err := html.Parse(r)
 	if err != nil {
 		return nil, err
 	}
