@@ -64,7 +64,7 @@ func collectATags(root *html.Node) []*html.Node {
 		return aTagNodes
 	}
 
-	// root node not an <a></a> but might have a child that is
+	// root node not an <a></a> but might have a child/children that is/are
 	for c := root.FirstChild; c != nil; c = c.NextSibling {
 		childLinks := collectATags(c)
 		if childLinks != nil {
@@ -89,5 +89,5 @@ func parseTagText(root *html.Node) string {
 		text += " " + parseTagText(c)
 	}
 
-	return text
+	return strings.TrimSpace(text)
 }
